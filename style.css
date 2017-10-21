@@ -1,0 +1,89 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  background: #f2f2f2;
+}
+
+#page {
+  width: 100%;
+  height: 100%;
+}
+
+.block {
+  width: 100%;
+  color: black;
+  text-transform: uppercase;
+  font-size: 20px;
+  height: 800px;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+  height: 100%;
+  align-items: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+.block .moving {
+  perspective: 1000px;
+}
+
+.block h2 {
+  text-align: center;
+  margin: 0 auto;
+  text-shadow: 0px 1px 1px rgb(231, 5, 5);
+}
+
+.animation-container {
+  position: relative;
+  left: 20%;
+}
+
+.phone_container {
+  position: relative;
+  z-index: 10;
+}
+
+.animate {
+  position: absolute;
+}
+
+.left {
+  left: -60%;
+  top: 5%;
+}
+
+.down {
+  bottom: 0;
+  right: -100%;
+}
+
+.up {
+  left: -50%;
+  top: 80%;
+}
+
+.right {
+  top: 0%;
+  right: 5%;
+}
+
+.shadow {
+  position: absolute;
+  bottom: -70px;
+  left: 41px;
+  max-width: 100%;
+}
+
+.phone {
+  max-width: 100%;
+  width: 300px;
+  height: auto;
+}
+
+

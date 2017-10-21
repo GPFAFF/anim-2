@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Parallax for Designers</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+  <div id="page">
+    <div class="block one">
+      <div class="container">
+        <h2>Here comes the scroll - Option 2</h2>
+      </div>
+    </div>
+
+    <div class="block two">
+      <div class="container">
+        <div class="animation-container">
+          <div class="animate moving left">
+            <img src="img/shape_1.svg" />
+          </div>
+          <div class="animate moving down">
+              <img src="img/shape_2.svg" />
+          </div>
+          <div class="phone_container">
+            <img alt="phone" src="img/phone.png" class="phone"/>
+            <img alt="phone shadow" src="img/phone_shadow.png" class="shadow"/>
+          </div>
+          <div class="animate moving up">
+              <img src="img/shape_3.svg" />
+          </div>
+          <div class="animate moving right">
+              <img src="img/shape_4.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block three">
+      <div class="container">
+
+        <div class="block four">
+          <div class="container">
+
+          </div>
+        </div>
+
+      <div class="block five">
+        <div class="container">
+
+        </div>
+      </div>
+      <div class="block six">
+        <div class="container">
+
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+
+  function debounce(func, wait = 20, immediate = true) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
+
+  function isVisible(element, onActive, onOff) {
+    const elementBox = element.getBoundingClientRect();
+    const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+    const slideInAt = viewHeight - (elementBox.height / 2);
+    const isHalfShown = slideInAt > elementBox.top;
+    const isNotScrolledPast = elementBox.bottom > 0;
+    if (isHalfShown && isNotScrolledPast) {
+      element.classList.add('parallax');
+      if (typeof onActive === 'function') {
+        onActive();
+      }
+    } else {
+      element.classList.remove('parallax');
+      if (typeof onOff === 'function') {
+        onOff();
+      }
+    }
+  }
+
+  function scrollTop(image, position1, position2) {
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    const scrollArea = windowHeight;
+    const scrollTop = window.pageYOffset || window.scrollTop;
+    const scrollPercent = scrollTop/scrollArea || 0;
+
+
+    console.log(scrollPercent);
+    image.style[position1] = scrollPercent + '%';
+    image.style[position2] = (scrollPercent*0.6) * 10 + '%';
+    image.style.transition = '.25s ease-in';
+  }
+
+
+  function animateOnScroll() {
+    window.requestAnimationFrame;
+
+    const moveables = [].slice.call(document.querySelectorAll('.moving'));
+
+    moveables.forEach(image => {
+
+      isVisible(image,
+      () => {
+        // const parallaxEffect = `translate3d(0, 0, 0)`;
+      },
+      () => {
+        if (image.classList.contains('up')) {
+          scrollTop(image, "left", "top");
+        } else if (image.classList.contains('right')) {
+          scrollTop(image, "top", "right");
+        } else if (image.classList.contains('down')) {
+          scrollTop(image, "bottom", "right");
+        } else if (image.classList.contains('left')) {
+          scrollTop(image, "left", "top");
+        }
+      });
+    });
+  }
+
+
+  window.addEventListener('scroll', debounce(animateOnScroll, 16));
+
+</script>
+
+</html>
+
+
+<!-- var square = document.querySelector("#square");
+var yScrollPosition;
+
+// scroll position
+// var deltaY;
+// The original position
+// var origY;
+// The distance it can move
+// var distanceY;
+
+// function easeInQuart(t, b, c, d) {
+//   return c*(t/=d)*t*t*t+b;
+// }
+
+function setTranslate(yPos, el) {
+  var pos = -yPos;
+  el.style.transform = "translate3d(0px, " + pos + "px, 0px)";
+}
+
+function scrollLoop() {
+	// var y += easeInQuart(deltaY, origY, distanceY, 1);
+  yScrollPosition = window.scrollY;
+
+  setTranslate(yScrollPosition, square);
+
+  requestAnimationFrame(scrollLoop);
+}
+
+scrollLoop(); -->
