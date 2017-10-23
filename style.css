@@ -54,23 +54,23 @@ img {
 }
 
 .left {
-  left: -60%;
+  left: -100%;
   top: 5%;
 }
 
 .down {
-  bottom: 0;
-  right: -100%;
+  top: 0;
+  right: -140%;
 }
 
 .up {
-  left: -50%;
+  left: 0%;
   top: 80%;
 }
 
 .right {
+  left: 75%;
   top: 0%;
-  right: 5%;
 }
 
 .shadow {

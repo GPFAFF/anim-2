@@ -101,18 +101,26 @@
     }
   }
 
-  function scrollTop(image, position1, position2) {
-    const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
-    const scrollArea = windowHeight;
-    const scrollTop = window.pageYOffset || window.scrollTop;
-    const scrollPercent = scrollTop/scrollArea || 0;
+  function offset(image) {
+    var rect = image.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+}
 
+  function scrollTop(image) {
 
-    console.log(scrollPercent);
-    image.style[position1] = scrollPercent + '%';
-    image.style[position2] = (scrollPercent*0.6) * 10 + '%';
-    image.style.transition = '.25s ease-in';
+    const rect = image.getBoundingClientRect();
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    const scrollDistance = (scrollTop  * 0.6) / 4;
+
+    if (image.classList.contains('parallax')) {
+      image.style.transform = `translate3d(${scrollDistance}px, 0, ${scrollDistance}px)`
+    } else {
+      image.style.transform = 'translate3d(0, 0, 0)';
+    }
   }
 
 
@@ -125,18 +133,10 @@
 
       isVisible(image,
       () => {
-        // const parallaxEffect = `translate3d(0, 0, 0)`;
+          scrollTop(image);
       },
       () => {
-        if (image.classList.contains('up')) {
-          scrollTop(image, "left", "top");
-        } else if (image.classList.contains('right')) {
-          scrollTop(image, "top", "right");
-        } else if (image.classList.contains('down')) {
-          scrollTop(image, "bottom", "right");
-        } else if (image.classList.contains('left')) {
-          scrollTop(image, "left", "top");
-        }
+          //scrollTop(image);
       });
     });
   }
